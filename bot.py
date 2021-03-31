@@ -19,9 +19,10 @@ async def on_raw_reaction_add(payload):
     if role in user.roles:
         return
     await user.add_roles(role)
-    if discord.utils.get(await guild.fetch_channels(), id=824542556423192647) == discord.utils.get(await guild.fetch_channels(), id=payload.channel_id):
+    payload_channel = discord.utils.get(await guild.fetch_channels(), id=payload.channel_id)
+    if discord.utils.get(await guild.fetch_channels(), id=824542556423192647) == payload_channel:
         await user.send("Welcome to our server! :slight_smile:")
-    elif discord.utils.get(await guild.fetch_channels(), id=824543068379545610) == discord.utils.get(await guild.fetch_channels(), id=payload.channel_id):
+    elif discord.utils.get(await guild.fetch_channels(), id=824543068379545610) == payload_channel:
         await user.send("Wilkommen auf dem Server! :slight_smile:")
 
 
@@ -54,7 +55,7 @@ async def verify(ctx, *args):
             "``%verify get`` – outputs the verify message id\n"
             "``%verify set <message id>`` - sets the verify message\n"
         )
-    elif args[0] == "get":
+    elif args[0] == "get" or args[0] == "list":
         import os
         import json
 
@@ -99,4 +100,4 @@ async def verify(ctx, *args):
     else:
         await ctx.send("Wrong usage! See ``%verify``")
 
-bot.run("TOKEN")
+bot.run(os.getenv("TOKEN"))
