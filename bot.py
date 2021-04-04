@@ -1,5 +1,8 @@
+#!/usr/bin/python3
+
 import discord
 from discord.ext import commands
+import os
 
 bot = commands.Bot(command_prefix="%", intents=discord.Intents.all())
 bot.help_command = None
