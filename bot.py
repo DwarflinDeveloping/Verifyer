@@ -10,6 +10,14 @@ bot.help_command = None
 verify_messages = []
 
 
+def make_directories():
+    from os.path import isdir
+    if not isdir("data"):
+        os.mkdir("data")
+    if not isdir("data/verify_messages"):
+        os.mkdir("data/verify_messages")
+
+
 @bot.event
 async def on_raw_reaction_add(payload):
     if payload.emoji.name != "✅" or payload.user_id == bot.user.id:
@@ -102,5 +110,8 @@ async def verify(ctx, *args):
             await ctx.send("This guild has no verify messages.")
     else:
         await ctx.send("Wrong usage! See ``%verify``")
+
+
+make_directories()
 
 bot.run(os.getenv("TOKEN"))
